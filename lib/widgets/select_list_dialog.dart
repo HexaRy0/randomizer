@@ -40,6 +40,7 @@ class _SelectListDialogState extends ConsumerState<SelectListDialog> {
                       item.items.join(', '),
                       overflow: TextOverflow.ellipsis,
                     ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 4),
                     onTap: () {
                       ref.read(selectedGroupListProvider.notifier).selectGroupList(item);
                       Navigator.pop(context);

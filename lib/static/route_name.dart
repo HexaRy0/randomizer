@@ -2,12 +2,14 @@ class RouteName {
   static const String home = '/';
   static const String about = '/about';
   static const String settings = '/settings';
+  static const String addGroupList = '/add-group-list';
 
   // Randomizer Item Routes
   static const String randomNumber = '/random-number';
   static const String coinFlip = '/coin-flip';
   static const String diceRoll = '/dice-roll';
   static const String cardDraw = '/card-draw';
+  static const String groupBuilder = '/group-builder';
   static const String listRandomizer = '/list-randomizer';
   static const String passwordGenerator = '/password-generator';
   static const String randomColor = '/random-color';

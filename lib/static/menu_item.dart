@@ -20,6 +20,10 @@ final List<MenuItem> menuItem = [
     route: RouteName.cardDraw,
   ),
   MenuItem(
+    title: StaticStrings.groupBuilder,
+    route: RouteName.groupBuilder,
+  ),
+  MenuItem(
     title: StaticStrings.listRandomizer,
     route: RouteName.listRandomizer,
   ),

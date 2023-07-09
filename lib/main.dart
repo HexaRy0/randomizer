@@ -1,15 +1,18 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:randomizer/helper/routes.dart';
+import 'package:randomizer/model/group_list.dart';
 import 'package:randomizer/static/route_name.dart';
 import 'package:randomizer/static/strings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await getApplicationDocumentsDirectory();
+  final dir = await getApplicationDocumentsDirectory();
+  await Isar.open([GroupListSchema], directory: dir.path, name: "randomizer");
 
   runApp(const MyApp());
 }

@@ -8,6 +8,7 @@ class StaticStrings {
   static const String coinFlip = "Coin Flip";
   static const String diceRoll = "Dice Roll";
   static const String cardDraw = "Card Draw";
+  static const String groupBuilder = "Group Builder";
   static const String listRandomizer = "List Randomizer";
   static const String passwordGenerator = "Password Generator";
   static const String randomColor = "Random Color";

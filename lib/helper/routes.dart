@@ -13,61 +13,23 @@ import 'package:randomizer/screens/randomizer/random_letter/random_letter.dart';
 import 'package:randomizer/screens/randomizer/random_number/random_number.dart';
 import 'package:randomizer/screens/randomizer/random_time/random_time.dart';
 import 'package:randomizer/screens/randomizer/random_word/random_word.dart';
-import 'package:randomizer/screens/randomizer/randomizer.dart';
 import 'package:randomizer/screens/settings/settings.dart';
 import 'package:randomizer/static/route_name.dart';
-import 'package:randomizer/static/strings.dart';
 
 final Map<String, Widget Function(BuildContext)> routes = {
   RouteName.home: (context) => const HomeScreen(),
   RouteName.about: (context) => const AboutScreen(),
   RouteName.settings: (context) => const SettingsScreen(),
-  RouteName.randomNumber: (context) => const RandomizerScreen(
-        title: StaticStrings.randomNumber,
-        body: RandomNumber(),
-      ),
-  RouteName.coinFlip: (context) => const RandomizerScreen(
-        title: StaticStrings.coinFlip,
-        body: CoinFlip(),
-      ),
-  RouteName.diceRoll: (context) => const RandomizerScreen(
-        title: StaticStrings.diceRoll,
-        body: DiceRoll(),
-      ),
-  RouteName.cardDraw: (context) => const RandomizerScreen(
-        title: StaticStrings.cardDraw,
-        body: CardDraw(),
-      ),
-  RouteName.listRandomizer: (context) => const RandomizerScreen(
-        title: StaticStrings.listRandomizer,
-        body: ListRandomizer(),
-      ),
-  RouteName.passwordGenerator: (context) => const RandomizerScreen(
-        title: StaticStrings.passwordGenerator,
-        body: PasswordGenerator(),
-      ),
-  RouteName.randomColor: (context) => const RandomizerScreen(
-        title: StaticStrings.randomColor,
-        body: RandomColor(),
-      ),
-  RouteName.randomLetter: (context) => const RandomizerScreen(
-        title: StaticStrings.randomLetter,
-        body: RandomLetter(),
-      ),
-  RouteName.randomWord: (context) => const RandomizerScreen(
-        title: StaticStrings.randomWord,
-        body: RandomWord(),
-      ),
-  RouteName.randomDate: (context) => const RandomizerScreen(
-        title: StaticStrings.randomDate,
-        body: RandomDate(),
-      ),
-  RouteName.randomTime: (context) => const RandomizerScreen(
-        title: StaticStrings.randomTime,
-        body: RandomTime(),
-      ),
-  RouteName.randomAnimal: (context) => const RandomizerScreen(
-        title: StaticStrings.randomAnimal,
-        body: RandomAnimal(),
-      ),
+  RouteName.randomNumber: (context) => const RandomNumberScreen(),
+  RouteName.coinFlip: (context) => const CoinFlipScreen(),
+  RouteName.diceRoll: (context) => const DiceRollScreen(),
+  RouteName.cardDraw: (context) => const CardDrawScreen(),
+  RouteName.listRandomizer: (context) => const ListRandomizerScreen(),
+  RouteName.passwordGenerator: (context) => const PasswordGeneratorScreen(),
+  RouteName.randomColor: (context) => const RandomColorScreen(),
+  RouteName.randomLetter: (context) => const RandomLetterScreen(),
+  RouteName.randomWord: (context) => const RandomWordScreen(),
+  RouteName.randomDate: (context) => const RandomDateScreen(),
+  RouteName.randomTime: (context) => const RandomTimeScreen(),
+  RouteName.randomAnimal: (context) => const RandomAnimalScreen(),
 };

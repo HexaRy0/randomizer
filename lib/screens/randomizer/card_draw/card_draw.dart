@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:randomizer/static/strings.dart';
 
-class CardDraw extends StatefulWidget {
-  const CardDraw({super.key});
+class CardDrawScreen extends StatefulWidget {
+  const CardDrawScreen({super.key});
 
   @override
-  State<CardDraw> createState() => _CardDrawState();
+  State<CardDrawScreen> createState() => _CardDrawScreenState();
 }
 
-class _CardDrawState extends State<CardDraw> {
+class _CardDrawScreenState extends State<CardDrawScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(StaticStrings.cardDraw),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Card Draw',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

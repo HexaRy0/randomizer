@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:randomizer/static/strings.dart';
 
-class RandomTime extends StatefulWidget {
-  const RandomTime({super.key});
+class RandomTimeScreen extends StatefulWidget {
+  const RandomTimeScreen({super.key});
 
   @override
-  State<RandomTime> createState() => _RandomTimeState();
+  State<RandomTimeScreen> createState() => _RandomTimeScreenState();
 }
 
-class _RandomTimeState extends State<RandomTime> {
+class _RandomTimeScreenState extends State<RandomTimeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(StaticStrings.randomTime),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Random Time',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

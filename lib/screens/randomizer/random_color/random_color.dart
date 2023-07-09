@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:randomizer/static/strings.dart';
 
-class RandomColor extends StatefulWidget {
-  const RandomColor({super.key});
+class RandomColorScreen extends StatefulWidget {
+  const RandomColorScreen({super.key});
 
   @override
-  State<RandomColor> createState() => _RandomColorState();
+  State<RandomColorScreen> createState() => _RandomColorScreenState();
 }
 
-class _RandomColorState extends State<RandomColor> {
+class _RandomColorScreenState extends State<RandomColorScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(StaticStrings.randomColor),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Random Color',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

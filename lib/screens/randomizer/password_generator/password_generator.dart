@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:randomizer/static/strings.dart';
 
-class PasswordGenerator extends StatefulWidget {
-  const PasswordGenerator({super.key});
+class PasswordGeneratorScreen extends StatefulWidget {
+  const PasswordGeneratorScreen({super.key});
 
   @override
-  State<PasswordGenerator> createState() => _PasswordGeneratorState();
+  State<PasswordGeneratorScreen> createState() => _PasswordGeneratorScreenState();
 }
 
-class _PasswordGeneratorState extends State<PasswordGenerator> {
+class _PasswordGeneratorScreenState extends State<PasswordGeneratorScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(StaticStrings.passwordGenerator),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Password Generator',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

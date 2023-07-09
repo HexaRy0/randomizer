@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:randomizer/static/strings.dart';
 
-class DiceRoll extends StatefulWidget {
-  const DiceRoll({super.key});
+class DiceRollScreen extends StatefulWidget {
+  const DiceRollScreen({super.key});
 
   @override
-  State<DiceRoll> createState() => _DiceRollState();
+  State<DiceRollScreen> createState() => _DiceRollScreenState();
 }
 
-class _DiceRollState extends State<DiceRoll> {
+class _DiceRollScreenState extends State<DiceRollScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(StaticStrings.diceRoll),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Dice Roll',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

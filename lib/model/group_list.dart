@@ -15,4 +15,9 @@ class GroupList {
     required this.items,
     this.isGenerated = false,
   });
+
+  @override
+  String toString() {
+    return 'GroupList{name: $name, items: $items, isGenerated: $isGenerated}';
+  }
 }

@@ -4,10 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:randomizer/model/group_list.dart';
 import 'package:randomizer/providers/async_group_list_provider.dart';
 import 'package:randomizer/providers/selected_group_list_provider.dart';
+import 'package:randomizer/widgets/edit_item_dialog.dart';
 
 class AddGroupListScreen extends ConsumerStatefulWidget {
-  const AddGroupListScreen({super.key, this.isFromOtherScreen = false});
+  const AddGroupListScreen({
+    super.key,
+    this.groupList,
+    this.isChildElement = false,
+    this.isEdit = false,
+    this.isFromOtherScreen = false,
+  });
 
+  final GroupList? groupList;
+  final bool isChildElement;
+  final bool isEdit;
   final bool isFromOtherScreen;
 
   @override
@@ -18,42 +28,90 @@ class _AddGroupListScreenState extends ConsumerState<AddGroupListScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   final List<String> _items = [];
 
-  void _handleAddButton() {
+  void _handleSubmitButton() {
     if (_formKey.currentState!.saveAndValidate()) {
       final name = _formKey.currentState!.value['listName'];
       final items = _items;
-      final newGroupList = GroupList(name: name, items: items);
 
-      ref.read(asyncGroupListProvider.notifier).addGroupList(newGroupList);
+      if (widget.isEdit) {
+        final newGroupList = widget.groupList!;
+        newGroupList.name = name;
+        newGroupList.items = items;
 
-      if (widget.isFromOtherScreen) {
-        ref.read(selectedGroupListProvider.notifier).selectGroupList(newGroupList);
+        ref.read(asyncGroupListProvider.notifier).updateGroupList(newGroupList);
 
-        Navigator.of(context).pop(newGroupList);
+        if (widget.isChildElement) return;
+
+        if (widget.isFromOtherScreen) {
+          ref.read(selectedGroupListProvider.notifier).selectGroupList(newGroupList);
+
+          Navigator.of(context).pop(newGroupList);
+        } else {
+          Navigator.of(context).pop();
+        }
       } else {
-        Navigator.of(context).pop();
+        final newGroupList = GroupList(name: name, items: items);
+
+        ref.read(asyncGroupListProvider.notifier).addGroupList(newGroupList);
+
+        if (widget.isChildElement) return;
+
+        if (widget.isFromOtherScreen) {
+          ref.read(selectedGroupListProvider.notifier).selectGroupList(newGroupList);
+
+          Navigator.of(context).pop(newGroupList);
+        } else {
+          Navigator.of(context).pop();
+        }
       }
     }
+  }
+
+  void _handleShowDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (context) => EditItemDialog(
+        item: _items[index],
+        onEdit: (value) => setState(() => _items[index] = value),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    if (widget.isEdit) {
+      _items.addAll(widget.groupList!.items);
+    }
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add New List"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _handleAddButton,
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Add List"),
-        icon: const Icon(Icons.add),
-        onPressed: _handleAddButton,
-      ),
-      body: Padding(
+      appBar: widget.isChildElement
+          ? null
+          : AppBar(
+              title: const Text("Add New List"),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.save),
+                  onPressed: _handleSubmitButton,
+                ),
+              ],
+            ),
+      floatingActionButton: widget.isEdit
+          ? FloatingActionButton.extended(
+              label: const Text("Save Changes"),
+              icon: const Icon(Icons.save),
+              onPressed: _handleSubmitButton,
+            )
+          : FloatingActionButton.extended(
+              label: const Text("Add List"),
+              icon: const Icon(Icons.add),
+              onPressed: _handleSubmitButton,
+            ),
+      body: Container(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: FormBuilder(
@@ -62,6 +120,7 @@ class _AddGroupListScreenState extends ConsumerState<AddGroupListScreen> {
               children: [
                 FormBuilderTextField(
                   name: 'listName',
+                  initialValue: widget.isEdit ? widget.groupList!.name : '',
                   decoration: const InputDecoration(
                     labelText: 'List Name',
                     border: OutlineInputBorder(),
@@ -75,7 +134,7 @@ class _AddGroupListScreenState extends ConsumerState<AddGroupListScreen> {
                       child: FormBuilderTextField(
                         name: 'item',
                         decoration: const InputDecoration(
-                          labelText: 'New Item',
+                          labelText: 'Add New Item',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -111,19 +170,34 @@ class _AddGroupListScreenState extends ConsumerState<AddGroupListScreen> {
                   itemCount: _items.length,
                   separatorBuilder: (context, index) => const Divider(),
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(_items[index]),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            _items.removeAt(index);
-                          });
-                        },
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_items[index]),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () => _handleShowDialog(index),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  setState(() {
+                                    _items.removeAt(index);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   },
                 ),
+                const SizedBox(height: 72),
               ],
             ),
           ),

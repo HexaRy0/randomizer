@@ -3,6 +3,7 @@ class RouteName {
   static const String about = '/about';
   static const String settings = '/settings';
   static const String addGroupList = '/add-group-list';
+  static const String listDetail = '/list-detail';
 
   // Randomizer Item Routes
   static const String randomNumber = '/random-number';

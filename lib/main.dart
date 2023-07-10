@@ -30,18 +30,12 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               brightness: Brightness.light,
-              colorScheme: lightColorScheme ??
-                  ThemeData.light(
-                    useMaterial3: true,
-                  ).colorScheme,
+              colorScheme: lightColorScheme,
               useMaterial3: true,
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
-              colorScheme: darkColorScheme ??
-                  ThemeData.dark(
-                    useMaterial3: true,
-                  ).colorScheme,
+              colorScheme: darkColorScheme,
               useMaterial3: true,
             ),
             themeMode: ThemeMode.system,

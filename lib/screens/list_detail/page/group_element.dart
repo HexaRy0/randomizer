@@ -50,10 +50,10 @@ class _GroupElementState extends ConsumerState<GroupElement> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter amount';
+                      return 'Please enter amount group generated';
                     }
                     if (int.tryParse(value)! > widget.groupList.items.length) {
-                      return 'Value are more than total item';
+                      return 'Value are more than total item in list';
                     }
 
                     return null;

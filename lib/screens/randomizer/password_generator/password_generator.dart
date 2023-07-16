@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/password_generator_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -41,14 +42,19 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
           child: Column(
             children: [
               FormBuilderTextField(
-                name: 'length',
-                initialValue: "8",
-                decoration: const InputDecoration(
-                  labelText: 'Password Length',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-              ),
+                  name: 'length',
+                  initialValue: "8",
+                  decoration: const InputDecoration(
+                    labelText: 'Password Length (8-1024)',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(),
+                    FormBuilderValidators.min(8),
+                    FormBuilderValidators.max(1024),
+                  ])),
               FormBuilderFilterChip(
                 name: 'include',
                 decoration: const InputDecoration(
@@ -75,6 +81,13 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
                     child: Text("Symbol"),
                   ),
                 ],
+                validator: (List<String>? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please select at least one password option";
+                  }
+
+                  return null;
+                },
               ),
               Expanded(
                 child: Card(

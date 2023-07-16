@@ -13,4 +13,8 @@ class SelectedGroupList extends _$SelectedGroupList {
   void selectGroupList(GroupList? groupList) {
     state = groupList;
   }
+
+  void unselectGroupList() {
+    state = null;
+  }
 }

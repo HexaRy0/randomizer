@@ -21,6 +21,8 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
 
   void _handleResetButton() {
     _formKey.currentState!.reset();
+    ref.read(groupBuilderProvider.notifier).reset();
+    ref.read(selectedGroupListProvider.notifier).unselectGroupList();
   }
 
   void _handleGenerateButton() {
@@ -81,10 +83,10 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter amount';
+                      return 'Please enter amount group generated';
                     }
                     if (int.tryParse(value)! > selectedGroupList!.items.length) {
-                      return 'Value are more than total item';
+                      return 'Value are more than total item in selected list';
                     }
 
                     return null;

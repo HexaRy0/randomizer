@@ -12,6 +12,10 @@ class GroupBuilder extends _$GroupBuilder {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateGroupList(GroupList groupList, int amount) {
     final random = Random();
     final groupListItems = [...groupList.items];

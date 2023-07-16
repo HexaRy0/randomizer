@@ -56,7 +56,7 @@ class _RandomWordScreenState extends ConsumerState<RandomWordScreen> {
                     child: Center(
                       child: SingleChildScrollView(
                         child: randomWord.isEmpty
-                            ? const Text("Press the button to generate letter")
+                            ? const Text("Press the button to generate word")
                             : ListView.builder(
                                 shrinkWrap: true,
                                 primary: false,

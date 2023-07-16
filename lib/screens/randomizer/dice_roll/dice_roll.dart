@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/dice_roll_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -65,12 +66,12 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                   border: OutlineInputBorder(),
                 ),
                 initialValue: "1",
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter amount card drawn';
-                  }
-                  return null;
-                },
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.numeric(),
+                  FormBuilderValidators.min(1),
+                  FormBuilderValidators.max(1000),
+                ]),
               ),
               const SizedBox(height: 12),
               Expanded(

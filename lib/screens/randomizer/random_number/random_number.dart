@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/random_number_provider.dart';
 
 class RandomNumberScreen extends ConsumerStatefulWidget {
@@ -56,12 +57,12 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                   border: OutlineInputBorder(),
                 ),
                 initialValue: "1",
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a amount value';
-                  }
-                  return null;
-                },
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.numeric(),
+                  FormBuilderValidators.min(1),
+                  FormBuilderValidators.max(1000),
+                ]),
               ),
               const SizedBox(height: 12),
               Row(
@@ -75,12 +76,10 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                         border: OutlineInputBorder(),
                       ),
                       initialValue: "1",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a minimum number';
-                        }
-                        return null;
-                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -93,12 +92,10 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                         border: OutlineInputBorder(),
                       ),
                       initialValue: "100",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a maximum number';
-                        }
-                        return null;
-                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
                     ),
                   ),
                 ],

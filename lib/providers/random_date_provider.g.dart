@@ -6,7 +6,7 @@ part of 'random_date_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$randomDateHash() => r'8a2860afd48f42e5f5638cee977a8209837ea4b9';
+String _$randomDateHash() => r'dd46000a39bcd71ee67bb3aa74a3d9baa68ac368';
 
 /// See also [RandomDate].
 @ProviderFor(RandomDate)

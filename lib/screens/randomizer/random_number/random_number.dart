@@ -77,10 +77,17 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                         border: OutlineInputBorder(),
                       ),
                       initialValue: "1",
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                        FormBuilderValidators.numeric(),
-                      ]),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Minimum number is required";
+                        }
+
+                        if (int.parse(value) > int.parse(_formKey.currentState!.value['maximum'])) {
+                          return "Must be less than maximum";
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -93,63 +100,156 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                         border: OutlineInputBorder(),
                       ),
                       initialValue: "100",
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                        FormBuilderValidators.numeric(),
-                      ]),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Maximum number is required";
+                        }
+
+                        if (int.parse(value) < int.parse(_formKey.currentState!.value['minimum'])) {
+                          return "Must be greater than minimum";
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                 ],
               ),
               FormBuilderCheckbox(
                 name: 'unique',
-                title: const Text('Unique'),
                 initialValue: false,
+                title: const Text('Unique'),
+                validator: (value) {
+                  if (value == true) {
+                    if (int.parse(_formKey.currentState!.value['amount']) >
+                        int.parse(_formKey.currentState!.value['maximum']) -
+                            int.parse(_formKey.currentState!.value['minimum'])) {
+                      return "Amount must be less than maximum - minimum";
+                    }
+                  }
+
+                  return null;
+                },
               ),
               Expanded(
                 child: Card(
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Center(
                           child: SingleChildScrollView(
-                            child: Text(
-                              randomNumber.toString(),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            ),
+                            child: randomNumber.isEmpty
+                                ? Icon(
+                                    Icons.numbers,
+                                    size: 128,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer
+                                        .withOpacity(0.5),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemCount: randomNumber.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Card(
+                                          color: Theme.of(context).colorScheme.secondaryContainer,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12),
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  top: 0,
+                                                  left: 0,
+                                                  child: Container(
+                                                    padding: const EdgeInsets.all(4),
+                                                    decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      borderRadius: BorderRadius.circular(4),
+                                                    ),
+                                                    child: Text("${index + 1}"),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.all(8),
+                                                  width: double.infinity,
+                                                  child: Text(
+                                                    randomNumber[index].toString(),
+                                                    textAlign: TextAlign.center,
+                                                    style: Theme.of(context).textTheme.titleLarge,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  right: 0,
+                                                  child: IconButton.filled(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all<Color>(
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryContainer,
+                                                      ),
+                                                      foregroundColor:
+                                                          MaterialStateProperty.all<Color>(
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimaryContainer,
+                                                      ),
+                                                    ),
+                                                    icon: const Icon(Icons.copy),
+                                                    onPressed: () async {
+                                                      await Clipboard.setData(
+                                                        ClipboardData(
+                                                          text: randomNumber[index].toString(),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: randomNumber.isEmpty
+                        randomNumber.length <= 1
                             ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: IconButton.filled(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(
-                                      Theme.of(context).colorScheme.primaryContainer,
-                                    ),
-                                    foregroundColor: MaterialStateProperty.all<Color>(
-                                      Theme.of(context).colorScheme.onPrimaryContainer,
-                                    ),
-                                  ),
-                                  icon: const Icon(Icons.copy),
-                                  onPressed: () async {
-                                    await Clipboard.setData(
-                                      ClipboardData(
-                                        text: randomNumber.toString(),
+                            : Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton.icon(
+                                    label: const Text("Copy All"),
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.primaryContainer,
                                       ),
-                                    );
-                                  },
+                                      foregroundColor: MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.onPrimaryContainer,
+                                      ),
+                                    ),
+                                    icon: const Icon(Icons.copy),
+                                    onPressed: () async {
+                                      await Clipboard.setData(
+                                        ClipboardData(
+                                          text: randomNumber.join(", ").toString(),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

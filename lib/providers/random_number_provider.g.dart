@@ -6,12 +6,12 @@ part of 'random_number_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$randomNumberHash() => r'9f1eb79d2ee836a7be2e657df9dd523e2320f6e0';
+String _$randomNumberHash() => r'cae6b32e11a84d468dac8c01f270d0ccbc4955df';
 
 /// See also [RandomNumber].
 @ProviderFor(RandomNumber)
 final randomNumberProvider =
-    AutoDisposeNotifierProvider<RandomNumber, String>.internal(
+    AutoDisposeNotifierProvider<RandomNumber, List<int>>.internal(
   RandomNumber.new,
   name: r'randomNumberProvider',
   debugGetCreateSourceHash:
@@ -20,5 +20,5 @@ final randomNumberProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$RandomNumber = AutoDisposeNotifier<String>;
+typedef _$RandomNumber = AutoDisposeNotifier<List<int>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

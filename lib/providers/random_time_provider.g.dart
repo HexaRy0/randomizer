@@ -6,7 +6,7 @@ part of 'random_time_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$randomTimeHash() => r'2b3a57bbbcce79be3c89d857b58ed7bf6a9ee958';
+String _$randomTimeHash() => r'afc0cbc882e3b17e031e0333483543f371ce17a3';
 
 /// See also [RandomTime].
 @ProviderFor(RandomTime)

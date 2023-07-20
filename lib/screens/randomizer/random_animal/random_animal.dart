@@ -48,6 +48,17 @@ class _RandomAnimalScreenState extends ConsumerState<RandomAnimalScreen> {
                   labelText: "Amount animal generated",
                   border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount of animal generated';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
+                    return 'Please enter amount of animal generated between 1 and 1000';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Expanded(

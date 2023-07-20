@@ -15,49 +15,24 @@ class CardDraw extends _$CardDraw {
     List<String> output = [];
 
     List<String> cardClasses = ["Hearts", "Diamonds", "Clubs", "Spades"];
-    List<String> cardNumbers;
+    List<String> cardNumbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     List<String> cards = [];
-
-    if (deckType == "standard") {
-      cardNumbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    } else {
-      cardNumbers = [
-        "Ace",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "Jack",
-        "Queen",
-        "King",
-        "Joker",
-        "Joker"
-      ];
-    }
 
     for (String cardClass in cardClasses) {
       for (String cardNumber in cardNumbers) {
-        if (cardNumber == "Joker") {
-          cards.add(cardNumber);
-          continue;
-        }
         cards.add("$cardNumber of $cardClass");
       }
     }
 
+    if (deckType == "standard-joker") {
+      cards.add("Joker");
+      cards.add("Joker");
+    }
+
     if (unique) {
-      if (amount > 52) {
-        output.add("Amount must be less than or equal to the range");
-      } else {
-        cards.shuffle();
-        for (int i = 0; i < amount; i++) {
-          output.add(cards[i]);
-        }
+      cards.shuffle();
+      for (int i = 0; i < amount; i++) {
+        output.add(cards[i]);
       }
     } else {
       for (int i = 0; i < amount; i++) {

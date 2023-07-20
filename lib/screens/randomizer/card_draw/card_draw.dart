@@ -129,43 +129,65 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(12),
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 3 / 4,
-                        ),
-                        itemCount: cardDraw.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: Card(
-                              color: Theme.of(context).colorScheme.secondaryContainer,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  width: double.infinity,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      !cardDraw[index].contains("Joker")
-                                          ? _generateCardSymbol(cardDraw[index].split(" of ").last)
-                                          : Container(),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        cardDraw[index].split(" of ").first,
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.titleLarge,
-                                      ),
-                                    ],
+                      child: cardDraw.isEmpty
+                          ? Transform.rotate(
+                              angle: .25,
+                              child: Container(
+                                width: 80,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.secondaryContainer,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: SizedBox(
+                                  child: Image.asset(
+                                    "assets/images/card/spades.png",
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer
+                                        .withOpacity(0.25),
                                   ),
                                 ),
                               ),
+                            )
+                          : GridView.builder(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 3 / 4,
+                              ),
+                              itemCount: cardDraw.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Card(
+                                    color: Theme.of(context).colorScheme.secondaryContainer,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        width: double.infinity,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            !cardDraw[index].contains("Joker")
+                                                ? _generateCardSymbol(
+                                                    cardDraw[index].split(" of ").last)
+                                                : Container(),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              cardDraw[index].split(" of ").first,
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context).textTheme.titleLarge,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
                 ),

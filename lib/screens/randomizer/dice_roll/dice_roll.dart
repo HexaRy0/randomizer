@@ -117,32 +117,39 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(12),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
+                      child: diceRoll.isEmpty
+                          ? FaIcon(
+                              FontAwesomeIcons.diceD6,
+                              color:
+                                  Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
+                              size: 128,
+                            )
+                          : Column(
+                              children: [
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: GridView.builder(
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                      ),
+                                      itemBuilder: (context, index) => Center(
+                                        child: _generateDice(context, diceRoll[index]),
+                                      ),
+                                      itemCount: diceRoll.length,
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                    ),
+                                  ),
                                 ),
-                                itemBuilder: (context, index) => Center(
-                                  child: _generateDice(context, diceRoll[index]),
-                                ),
-                                itemCount: diceRoll.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                              ),
+                                const SizedBox(height: 12),
+                                diceRoll.isEmpty
+                                    ? Container()
+                                    : Text(
+                                        'Total: ${diceRoll.reduce((value, element) => value + element)}',
+                                        style: Theme.of(context).textTheme.headlineMedium,
+                                      ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          diceRoll.isEmpty
-                              ? Container()
-                              : Text(
-                                  'Total: ${diceRoll.reduce((value, element) => value + element)}',
-                                  style: Theme.of(context).textTheme.headlineMedium,
-                                ),
-                        ],
-                      ),
                     ),
                   ),
                 ),

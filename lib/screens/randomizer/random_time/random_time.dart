@@ -24,7 +24,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
         title: const Text(StaticStrings.randomTime),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Generate Date"),
+        label: const Text("Generate Time"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
           if (_formKey.currentState!.saveAndValidate()) {
@@ -48,9 +48,20 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                 initialValue: "1",
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: "Amount date generated",
+                  labelText: "Amount time generated",
                   border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount of time generated';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
+                    return 'Please enter amount of time generated between 1 and 1000';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Row(
@@ -61,7 +72,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                       initialValue: DateTime.now(),
                       inputType: InputType.time,
                       decoration: const InputDecoration(
-                        labelText: "Start Date",
+                        labelText: "Start Time",
                         border: OutlineInputBorder(),
                       ),
                       valueTransformer: (value) {
@@ -84,7 +95,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                       initialValue: DateTime.now().add(const Duration(minutes: 10)),
                       inputType: InputType.time,
                       decoration: const InputDecoration(
-                        labelText: "End Date",
+                        labelText: "End Time",
                         border: OutlineInputBorder(),
                       ),
                       valueTransformer: (value) {
@@ -106,6 +117,18 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                 name: 'unique',
                 initialValue: false,
                 title: const Text('Unique'),
+                validator: (value) {
+                  if (value == true) {
+                    if (int.parse(_formKey.currentState!.value['amount'] as String) >
+                        (_formKey.currentState!.value['endTime'] as DateTime)
+                            .difference(_formKey.currentState!.value['startTime'] as DateTime)
+                            .inMinutes) {
+                      return 'Unique time only available for less than or equal to ${(_formKey.currentState!.value['endTime'] as DateTime).difference(_formKey.currentState!.value['startTime'] as DateTime).inMinutes}';
+                    }
+                  }
+
+                  return null;
+                },
               ),
               Expanded(
                 child: Card(
@@ -116,7 +139,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomTime.isEmpty
-                                ? const Text("Press the button to generate word")
+                                ? const Text("Press the button to generate time")
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     primary: false,

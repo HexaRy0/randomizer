@@ -117,7 +117,7 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomDate.isEmpty
-                                ? const Text("Press the button to generate word")
+                                ? const Text("Press the button to generate date")
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     primary: false,

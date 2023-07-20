@@ -49,6 +49,17 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
                   labelText: "Amount letter generated",
                   border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount of letter generated';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
+                    return 'Please enter amount of letter generated between 1 and 1000';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               FormBuilderDropdown(
@@ -83,7 +94,15 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomLetter.isEmpty
-                                ? const Text("Press the button to generate letter")
+                                ? Text(
+                                    "A~Z",
+                                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer
+                                              .withOpacity(0.5),
+                                        ),
+                                  )
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     primary: false,

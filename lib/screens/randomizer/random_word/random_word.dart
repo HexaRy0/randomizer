@@ -48,6 +48,17 @@ class _RandomWordScreenState extends ConsumerState<RandomWordScreen> {
                   labelText: "Amount word generated",
                   border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount of word generated';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
+                    return 'Please enter amount of word generated between 1 and 1000';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Expanded(

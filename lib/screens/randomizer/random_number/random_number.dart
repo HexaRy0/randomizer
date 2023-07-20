@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/random_number_provider.dart';
 
 class RandomNumberScreen extends ConsumerStatefulWidget {
@@ -54,16 +53,21 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                 name: 'amount',
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Amount Number Generated (1 - 1000)',
+                  labelText: 'Amount Number Generated (1 - 500)',
                   border: OutlineInputBorder(),
                 ),
                 initialValue: "1",
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(),
-                  FormBuilderValidators.min(1),
-                  FormBuilderValidators.max(1000),
-                ]),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount of number generated';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 500) {
+                    return 'Please enter amount of number generated between 1 and 500';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Row(

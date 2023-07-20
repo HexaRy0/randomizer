@@ -56,8 +56,8 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                     return 'Please enter amount of time generated';
                   }
 
-                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
-                    return 'Please enter amount of time generated between 1 and 1000';
+                  if (int.parse(value) < 1 || int.parse(value) > 500) {
+                    return 'Please enter amount of time generated between 1 and 500';
                   }
 
                   return null;

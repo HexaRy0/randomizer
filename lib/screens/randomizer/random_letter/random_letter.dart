@@ -54,8 +54,8 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
                     return 'Please enter amount of letter generated';
                   }
 
-                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
-                    return 'Please enter amount of letter generated between 1 and 1000';
+                  if (int.parse(value) < 1 || int.parse(value) > 500) {
+                    return 'Please enter amount of letter generated between 1 and 500';
                   }
 
                   return null;

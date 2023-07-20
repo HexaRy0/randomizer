@@ -95,7 +95,7 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                 name: 'amount',
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Amount Dice Rolled (1 - 1000)',
+                  labelText: 'Amount Dice Rolled (1 - 500)',
                   border: OutlineInputBorder(),
                 ),
                 initialValue: "9",
@@ -104,8 +104,8 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                     return 'Please enter a value';
                   }
 
-                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
-                    return 'Please enter a value between 1 and 1000';
+                  if (int.parse(value) < 1 || int.parse(value) > 500) {
+                    return 'Please enter a value between 1 and 500';
                   }
 
                   return null;

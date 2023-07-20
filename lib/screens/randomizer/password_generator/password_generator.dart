@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/password_generator_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -44,19 +43,25 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
           child: Column(
             children: [
               FormBuilderTextField(
-                  name: 'length',
-                  initialValue: "8",
-                  decoration: const InputDecoration(
-                    labelText: 'Password Length (8-1024)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.min(8),
-                    FormBuilderValidators.max(1024),
-                  ])),
+                name: 'length',
+                initialValue: "8",
+                decoration: const InputDecoration(
+                  labelText: 'Password Length (8-1024)',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter password length';
+                  }
+
+                  if (int.parse(value) < 8 || int.parse(value) > 1024) {
+                    return 'Please enter password length between 8 and 1024';
+                  }
+
+                  return null;
+                },
+              ),
               FormBuilderFilterChip(
                 name: 'include',
                 decoration: const InputDecoration(

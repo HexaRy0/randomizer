@@ -93,7 +93,7 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                 name: 'amount',
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Amount Card Drawn (1 - 1000)',
+                  labelText: 'Amount Card Drawn (1 - 500)',
                   border: OutlineInputBorder(),
                 ),
                 initialValue: "1",
@@ -102,8 +102,8 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                     return 'Please enter amount of card drawn';
                   }
 
-                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
-                    return 'Please enter amount of card drawn between 1 and 1000';
+                  if (int.parse(value) < 1 || int.parse(value) > 500) {
+                    return 'Please enter amount of card drawn between 1 and 500';
                   }
 
                   return null;

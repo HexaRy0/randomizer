@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -107,17 +108,48 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
               ),
               Expanded(
                 child: Card(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          randomNumber.toString(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headlineLarge,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              randomNumber.toString(),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: randomNumber.isEmpty
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IconButton.filled(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                      Theme.of(context).colorScheme.primaryContainer,
+                                    ),
+                                    foregroundColor: MaterialStateProperty.all<Color>(
+                                      Theme.of(context).colorScheme.onPrimaryContainer,
+                                    ),
+                                  ),
+                                  icon: const Icon(Icons.copy),
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(
+                                        text: randomNumber.toString(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                      ),
+                    ],
                   ),
                 ),
               ),

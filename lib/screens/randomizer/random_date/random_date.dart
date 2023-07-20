@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:randomizer/providers/random_date_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -20,7 +21,7 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(StaticStrings.randomLetter),
+        title: const Text(StaticStrings.randomDate),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Date"),
@@ -31,6 +32,7 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                   int.parse(_formKey.currentState!.value['amount'] as String),
                   _formKey.currentState!.value['startDate'] as DateTime,
                   _formKey.currentState!.value['endDate'] as DateTime,
+                  _formKey.currentState!.value['unique'] as bool,
                 );
           }
         },
@@ -49,28 +51,62 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                   labelText: "Amount date generated",
                   border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter amount date generated";
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
-              FormBuilderDateTimePicker(
-                name: 'startDate',
-                initialValue: DateTime.now(),
-                inputType: InputType.date,
-                decoration: const InputDecoration(
-                  labelText: "Start Date",
-                  border: OutlineInputBorder(),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderDateTimePicker(
+                      name: 'startDate',
+                      initialValue: DateTime.now(),
+                      format: DateFormat('dd/MM/yyyy'),
+                      inputType: InputType.date,
+                      decoration: const InputDecoration(
+                        labelText: "Start Date",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FormBuilderDateTimePicker(
+                      name: 'endDate',
+                      initialValue: DateTime.now().add(const Duration(days: 1)),
+                      format: DateFormat('dd/MM/yyyy'),
+                      inputType: InputType.date,
+                      decoration: const InputDecoration(
+                        labelText: "End Date",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              FormBuilderDateTimePicker(
-                name: 'endDate',
-                initialValue: DateTime.now(),
-                inputType: InputType.date,
-                decoration: const InputDecoration(
-                  labelText: "End Date",
-                  border: OutlineInputBorder(),
-                ),
+              FormBuilderCheckbox(
+                name: 'unique',
+                initialValue: false,
+                title: const Text("Unique"),
+                validator: (value) {
+                  if (value == true) {
+                    if (int.parse(_formKey.currentState!.value['amount'] as String) >
+                        _formKey.currentState!.value['endDate']!
+                                .difference(_formKey.currentState!.value['startDate'] as DateTime)
+                                .inDays +
+                            4) {
+                      return "Amount date generated must be less than date range";
+                    }
+                  }
+
+                  return null;
+                },
               ),
-              const SizedBox(height: 12),
               Expanded(
                 child: Card(
                   child: Padding(

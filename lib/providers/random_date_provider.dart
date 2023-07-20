@@ -12,27 +12,27 @@ class RandomDate extends _$RandomDate {
     return [];
   }
 
-  void generateRandomDate(int amount, DateTime startDate, DateTime endDate) {
+  void generateRandomDate(int amount, DateTime startDate, DateTime endDate, bool unique) {
     final random = Random();
 
     List<String> generatedDate = [];
 
-    final isSameDay = startDate.day == endDate.day;
-    final isSameMonth = startDate.month == endDate.month;
-    final isSameYear = startDate.year == endDate.year;
-
     for (var i = 0; i < amount; i++) {
-      final randomDate = DateTime(
-        !isSameYear
-            ? startDate.year + random.nextInt(endDate.year - startDate.year)
-            : startDate.year,
-        !isSameMonth
-            ? startDate.month + random.nextInt(endDate.month - startDate.month)
-            : startDate.month,
-        !isSameDay ? startDate.day + random.nextInt(endDate.day - startDate.day) : startDate.day,
+      final randomDate = startDate.add(
+        Duration(
+          days: random.nextInt(endDate.difference(startDate).inDays + 2),
+        ),
       );
 
-      generatedDate.add(DateFormat.yMMMMd().format(randomDate));
+      if (unique) {
+        if (!generatedDate.contains(DateFormat('dd/MM/yyyy').format(randomDate))) {
+          generatedDate.add(DateFormat('dd/MM/yyyy').format(randomDate));
+        } else {
+          i--;
+        }
+      } else {
+        generatedDate.add(DateFormat('dd/MM/yyyy').format(randomDate));
+      }
     }
 
     state = generatedDate;

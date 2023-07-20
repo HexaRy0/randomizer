@@ -14,7 +14,7 @@ class CoinFlip extends _$CoinFlip {
   void flipCoin() {
     String output = "";
 
-    output += ["Heads", "Tails"][Random().nextInt(2)];
+    output += ["heads", "tails"][Random().nextInt(2)];
 
     state = output;
   }

@@ -145,7 +145,7 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                                     size: 128,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .primaryContainer
+                                        .onPrimaryContainer
                                         .withOpacity(0.5),
                                   )
                                 : ListView.builder(

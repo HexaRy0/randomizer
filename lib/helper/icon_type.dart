@@ -1,0 +1,15 @@
+enum IconType {
+  number,
+  coin,
+  dice,
+  card,
+  group,
+  list,
+  password,
+  color,
+  letter,
+  word,
+  date,
+  time,
+  animal,
+}

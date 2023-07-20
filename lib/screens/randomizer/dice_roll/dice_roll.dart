@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:randomizer/providers/dice_roll_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -15,13 +15,46 @@ class DiceRollScreen extends ConsumerStatefulWidget {
 class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
+  Widget _generateDice(BuildContext context, int value) {
+    final IconData dice;
+
+    switch (value) {
+      case 1:
+        dice = FontAwesomeIcons.diceOne;
+        break;
+      case 2:
+        dice = FontAwesomeIcons.diceTwo;
+        break;
+      case 3:
+        dice = FontAwesomeIcons.diceThree;
+        break;
+      case 4:
+        dice = FontAwesomeIcons.diceFour;
+        break;
+      case 5:
+        dice = FontAwesomeIcons.diceFive;
+        break;
+      case 6:
+        dice = FontAwesomeIcons.diceSix;
+        break;
+      default:
+        dice = FontAwesomeIcons.diceD6;
+    }
+
+    return FaIcon(
+      dice,
+      color: Theme.of(context).colorScheme.primaryContainer,
+      size: 116,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final diceRoll = ref.watch(diceRollProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(StaticStrings.cardDraw),
+        title: const Text(StaticStrings.diceRoll),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Dice Roll"),
@@ -65,13 +98,18 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                   labelText: 'Amount Dice Rolled (1 - 1000)',
                   border: OutlineInputBorder(),
                 ),
-                initialValue: "1",
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(),
-                  FormBuilderValidators.min(1),
-                  FormBuilderValidators.max(1000),
-                ]),
+                initialValue: "9",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a value';
+                  }
+
+                  if (int.parse(value) < 1 || int.parse(value) > 1000) {
+                    return 'Please enter a value between 1 and 1000';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Expanded(
@@ -88,10 +126,7 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                                   crossAxisCount: 3,
                                 ),
                                 itemBuilder: (context, index) => Center(
-                                  child: Text(
-                                    diceRoll[index].toString(),
-                                    style: Theme.of(context).textTheme.headlineLarge,
-                                  ),
+                                  child: _generateDice(context, diceRoll[index]),
                                 ),
                                 itemCount: diceRoll.length,
                                 shrinkWrap: true,

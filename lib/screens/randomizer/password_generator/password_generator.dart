@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:randomizer/providers/password_generator_provider.dart';
 import 'package:randomizer/static/strings.dart';
@@ -94,43 +95,52 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: SingleChildScrollView(
-                            child: Text(
-                              passwordGenerator,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headlineLarge,
+                    child: passwordGenerator == ""
+                        ? Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.key,
+                              color:
+                                  Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
+                              size: 128,
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: passwordGenerator.isEmpty
-                              ? Container()
-                              : IconButton.filled(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(
-                                      Theme.of(context).colorScheme.primaryContainer,
-                                    ),
-                                    foregroundColor: MaterialStateProperty.all<Color>(
-                                      Theme.of(context).colorScheme.onPrimaryContainer,
-                                    ),
+                          )
+                        : Stack(
+                            children: [
+                              Center(
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                    passwordGenerator,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.headlineLarge,
                                   ),
-                                  icon: const Icon(Icons.copy),
-                                  onPressed: () async {
-                                    await Clipboard.setData(
-                                      ClipboardData(
-                                        text: passwordGenerator.toString(),
-                                      ),
-                                    );
-                                  },
                                 ),
-                        ),
-                      ],
-                    ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: passwordGenerator.isEmpty
+                                    ? Container()
+                                    : IconButton.filled(
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all<Color>(
+                                            Theme.of(context).colorScheme.primaryContainer,
+                                          ),
+                                          foregroundColor: MaterialStateProperty.all<Color>(
+                                            Theme.of(context).colorScheme.onPrimaryContainer,
+                                          ),
+                                        ),
+                                        icon: const Icon(Icons.copy),
+                                        onPressed: () async {
+                                          await Clipboard.setData(
+                                            ClipboardData(
+                                              text: passwordGenerator.toString(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),

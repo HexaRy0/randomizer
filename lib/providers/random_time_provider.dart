@@ -12,25 +12,33 @@ class RandomTime extends _$RandomTime {
     return [];
   }
 
-  void generateRandomTime(int amount, DateTime startTime, DateTime endTime) {
+  void generateRandomTime(int amount, DateTime startTime, DateTime endTime, bool unique) {
     final random = Random();
 
     List<String> generatedTime = [];
 
-    final isSameHour = startTime.hour == endTime.hour;
-    final isSameMinute = startTime.minute == endTime.minute;
-
     for (var i = 0; i < amount; i++) {
-      final randomTime = TimeOfDay(
-        hour: !isSameHour
-            ? startTime.hour + random.nextInt(endTime.hour - startTime.hour)
-            : startTime.hour,
-        minute: !isSameMinute
-            ? startTime.minute + random.nextInt(endTime.minute - startTime.minute)
-            : startTime.minute,
+      debugPrint(startTime.toString());
+      debugPrint(endTime.toString());
+      debugPrint(endTime.difference(startTime).inMinutes.toString());
+      final randomTime = startTime.add(
+        Duration(
+          minutes: random.nextInt(endTime.difference(startTime).inMinutes + 2),
+        ),
       );
 
-      generatedTime.add("${randomTime.hour}:${randomTime.minute}");
+      final hour = randomTime.hour.toString().padLeft(2, '0');
+      final minute = randomTime.minute.toString().padLeft(2, '0');
+
+      if (unique) {
+        if (!generatedTime.contains("$hour:$minute")) {
+          generatedTime.add("$hour:$minute");
+        } else {
+          i--;
+        }
+      } else {
+        generatedTime.add("$hour:$minute");
+      }
     }
 
     state = generatedTime;

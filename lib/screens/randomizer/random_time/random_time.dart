@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:randomizer/providers/random_time_provider.dart';
@@ -31,6 +32,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                   int.parse(_formKey.currentState!.value['amount'] as String),
                   _formKey.currentState!.value['startTime'] as DateTime,
                   _formKey.currentState!.value['endTime'] as DateTime,
+                  _formKey.currentState!.value['unique'] as bool,
                 );
           }
         },
@@ -51,56 +53,157 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              FormBuilderDateTimePicker(
-                name: 'startTime',
-                initialValue: DateTime.now(),
-                inputType: InputType.time,
-                decoration: const InputDecoration(
-                  labelText: "Start Date",
-                  border: OutlineInputBorder(),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderDateTimePicker(
+                      name: 'startTime',
+                      initialValue: DateTime.now(),
+                      inputType: InputType.time,
+                      decoration: const InputDecoration(
+                        labelText: "Start Date",
+                        border: OutlineInputBorder(),
+                      ),
+                      valueTransformer: (value) {
+                        if (value != null) {
+                          return DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            value.hour,
+                            value.minute,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FormBuilderDateTimePicker(
+                      name: 'endTime',
+                      initialValue: DateTime.now().add(const Duration(minutes: 10)),
+                      inputType: InputType.time,
+                      decoration: const InputDecoration(
+                        labelText: "End Date",
+                        border: OutlineInputBorder(),
+                      ),
+                      valueTransformer: (value) {
+                        if (value != null) {
+                          return DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            value.hour,
+                            value.minute,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              FormBuilderDateTimePicker(
-                name: 'endTime',
-                initialValue: DateTime.now(),
-                inputType: InputType.time,
-                decoration: const InputDecoration(
-                  labelText: "End Date",
-                  border: OutlineInputBorder(),
-                ),
+              FormBuilderCheckbox(
+                name: 'unique',
+                initialValue: false,
+                title: const Text('Unique'),
               ),
-              const SizedBox(height: 12),
               Expanded(
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: SingleChildScrollView(
-                        child: randomTime.isEmpty
-                            ? const Text("Press the button to generate date")
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                primary: false,
-                                itemCount: randomTime.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Card(
-                                      color: Theme.of(context).colorScheme.secondaryContainer,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12),
-                                        child: Text(
-                                          randomTime[index],
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: SingleChildScrollView(
+                            child: randomTime.isEmpty
+                                ? const Text("Press the button to generate word")
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    itemCount: randomTime.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Card(
+                                          color: Theme.of(context).colorScheme.secondaryContainer,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets.all(8),
+                                                  width: double.infinity,
+                                                  child: Text(
+                                                    randomTime[index],
+                                                    textAlign: TextAlign.center,
+                                                    style: Theme.of(context).textTheme.titleLarge,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  right: 0,
+                                                  child: IconButton.filled(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all<Color>(
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryContainer,
+                                                      ),
+                                                      foregroundColor:
+                                                          MaterialStateProperty.all<Color>(
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimaryContainer,
+                                                      ),
+                                                    ),
+                                                    icon: const Icon(Icons.copy),
+                                                    onPressed: () async {
+                                                      await Clipboard.setData(
+                                                        ClipboardData(
+                                                          text: randomTime[index].toString(),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ),
+                        randomTime.length <= 1
+                            ? Container()
+                            : Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton.icon(
+                                    label: const Text("Copy All"),
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.primaryContainer,
+                                      ),
+                                      foregroundColor: MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.onPrimaryContainer,
                                       ),
                                     ),
-                                  );
-                                },
+                                    icon: const Icon(Icons.copy),
+                                    onPressed: () async {
+                                      await Clipboard.setData(
+                                        ClipboardData(
+                                          text: randomTime.join(", ").toString(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
-                      ),
+                      ],
                     ),
                   ),
                 ),

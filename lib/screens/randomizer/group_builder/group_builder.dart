@@ -80,6 +80,7 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
                 FormBuilderTextField(
                   name: 'amount',
                   initialValue: "3",
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Amount Group Generated',
                     border: OutlineInputBorder(),
@@ -87,6 +88,9 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter amount group generated';
+                    }
+                    if (int.tryParse(value) == null) {
+                      return 'Please enter a valid number (integer)';
                     }
                     if (int.tryParse(value)! > selectedGroupList!.items.length) {
                       return 'Value are more than total item in selected list';

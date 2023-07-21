@@ -142,22 +142,22 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context) {
               return const [
                 PopupMenuItem(
-                  value: "about",
-                  child: Text("About"),
-                ),
-                PopupMenuItem(
                   value: "settings",
                   child: Text("Settings"),
+                ),
+                PopupMenuItem(
+                  value: "about",
+                  child: Text("About"),
                 ),
               ];
             },
             onSelected: (value) {
               switch (value) {
-                case "about":
-                  Navigator.pushNamed(context, RouteName.about);
-                  break;
                 case "settings":
                   Navigator.pushNamed(context, RouteName.settings);
+                  break;
+                case "about":
+                  Navigator.pushNamed(context, RouteName.about);
                   break;
               }
             },

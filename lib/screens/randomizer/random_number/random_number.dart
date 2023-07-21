@@ -62,6 +62,10 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                     return 'Please enter amount of number generated';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter valid number (integer)';
+                  }
+
                   if (int.parse(value) < 1 || int.parse(value) > 500) {
                     return 'Please enter amount of number generated between 1 and 500';
                   }
@@ -86,7 +90,12 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                           return "Minimum number is required";
                         }
 
-                        if (int.parse(value) > int.parse(_formKey.currentState!.value['maximum'])) {
+                        if (int.tryParse(value) == null) {
+                          return 'Please enter valid number (integer)';
+                        }
+
+                        if (int.parse(value) >
+                            (int.tryParse(_formKey.currentState!.value['maximum']) ?? 0)) {
                           return "Must be less than maximum";
                         }
 
@@ -109,7 +118,12 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                           return "Maximum number is required";
                         }
 
-                        if (int.parse(value) < int.parse(_formKey.currentState!.value['minimum'])) {
+                        if (int.tryParse(value) == null) {
+                          return 'Please enter valid number (integer)';
+                        }
+
+                        if (int.parse(value) <
+                            (int.tryParse(_formKey.currentState!.value['minimum']) ?? 0)) {
                           return "Must be greater than minimum";
                         }
 
@@ -125,9 +139,9 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
                 title: const Text('Unique'),
                 validator: (value) {
                   if (value == true) {
-                    if (int.parse(_formKey.currentState!.value['amount']) >
-                        int.parse(_formKey.currentState!.value['maximum']) -
-                            int.parse(_formKey.currentState!.value['minimum'])) {
+                    if ((int.tryParse(_formKey.currentState!.value['amount']) ?? 0) >
+                        (int.tryParse(_formKey.currentState!.value['maximum']) ?? 0) -
+                            (int.tryParse(_formKey.currentState!.value['minimum']) ?? 0)) {
                       return "Amount must be less than maximum - minimum";
                     }
                   }

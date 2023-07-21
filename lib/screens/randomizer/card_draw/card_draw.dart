@@ -112,6 +112,10 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                     return 'Please enter amount of card drawn';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   if (int.parse(value) < 1 || int.parse(value) > 500) {
                     return 'Please enter amount of card drawn between 1 and 500';
                   }
@@ -125,7 +129,7 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                 title: const Text('Unique'),
                 validator: (value) {
                   if (value == true) {
-                    if (int.parse(_formKey.currentState!.value['amount']) >
+                    if ((int.tryParse(_formKey.currentState!.value['amount']) ?? 0) >
                         (_formKey.currentState!.value['deckType'] == "standard" ? 52 : 54)) {
                       return 'Unique card only available for less than or equal to ${_formKey.currentState!.value['deckType'] == "standard" ? 52 : 54}';
                     }

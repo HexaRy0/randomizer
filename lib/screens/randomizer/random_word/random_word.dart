@@ -27,6 +27,7 @@ class _RandomWordScreenState extends ConsumerState<RandomWordScreen> {
         label: const Text("Generate Letter"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             ref.read(randomWordProvider.notifier).generateRandomWord(
                   int.parse(_formKey.currentState!.value['amount'] as String),

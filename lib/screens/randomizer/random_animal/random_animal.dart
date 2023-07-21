@@ -27,6 +27,7 @@ class _RandomAnimalScreenState extends ConsumerState<RandomAnimalScreen> {
         label: const Text("Generate Animal"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             ref.read(randomAnimalProvider.notifier).generateRandomAnimal(
                   int.parse(_formKey.currentState!.value['amount'] as String),

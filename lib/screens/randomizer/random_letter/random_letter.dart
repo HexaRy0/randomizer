@@ -27,6 +27,7 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
         label: const Text("Generate Letter"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             ref.read(randomLetterProvider.notifier).generateRandomLetter(
                   int.parse(_formKey.currentState!.value['amount'] as String),

@@ -28,6 +28,7 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
         label: const Text("Generate Date"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             ref.read(randomDateProvider.notifier).generateRandomDate(
                   int.parse(_formKey.currentState!.value['amount'] as String),

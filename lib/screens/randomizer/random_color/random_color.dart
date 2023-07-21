@@ -36,6 +36,7 @@ class _RandomColorScreenState extends ConsumerState<RandomColorScreen> {
         icon: const Icon(Icons.shuffle),
         label: const Text("Generate Color"),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           ref.read(randomColorProvider.notifier).generateRandomColor();
         },
       ),

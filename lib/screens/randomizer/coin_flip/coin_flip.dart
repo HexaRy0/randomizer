@@ -40,6 +40,7 @@ class _CoinFlipScreenState extends ConsumerState<CoinFlipScreen>
         label: const Text("Flip Coin"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           _controller.forward(from: 0);
           ref.read(coinFlipProvider.notifier).flipCoin();
         },

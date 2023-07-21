@@ -27,6 +27,7 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
   }
 
   void _handleGenerateButton() {
+    FocusScope.of(context).unfocus();
     if (_formKey.currentState!.saveAndValidate()) {
       final amount = int.parse(_formKey.currentState!.value['amount']);
       final groupList = ref.read(selectedGroupListProvider);

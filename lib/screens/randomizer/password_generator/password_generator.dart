@@ -28,6 +28,7 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
         label: const Text("Generate Password"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             final length = int.parse(_formKey.currentState!.value['length']);
             final includes = _formKey.currentState!.value['include'];

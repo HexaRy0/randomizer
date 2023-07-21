@@ -27,6 +27,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
         label: const Text("Generate Time"),
         icon: const Icon(Icons.shuffle),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           if (_formKey.currentState!.saveAndValidate()) {
             ref.read(randomTimeProvider.notifier).generateRandomTime(
                   int.parse(_formKey.currentState!.value['amount'] as String),

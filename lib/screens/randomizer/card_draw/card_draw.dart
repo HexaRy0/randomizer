@@ -36,8 +36,8 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
 
     return Image(
       image: image,
-      width: 24,
-      height: 24,
+      width: 36,
+      height: 36,
     );
   }
 
@@ -192,7 +192,7 @@ class _CardDrawScreenState extends ConsumerState<CardDrawScreen> {
                                             Text(
                                               cardDraw[index].split(" of ").first,
                                               textAlign: TextAlign.center,
-                                              style: Theme.of(context).textTheme.titleLarge,
+                                              style: Theme.of(context).textTheme.headlineLarge,
                                             ),
                                           ],
                                         ),

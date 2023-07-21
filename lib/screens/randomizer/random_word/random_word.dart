@@ -107,11 +107,25 @@ class _RandomWordScreenState extends ConsumerState<RandomWordScreen> {
                                             padding: const EdgeInsets.all(12),
                                             child: Stack(
                                               children: [
+                                                Positioned(
+                                                  top: 0,
+                                                  left: 0,
+                                                  child: Container(
+                                                    padding: const EdgeInsets.all(4),
+                                                    decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      borderRadius: BorderRadius.circular(4),
+                                                    ),
+                                                    child: Text("${index + 1}"),
+                                                  ),
+                                                ),
                                                 Container(
                                                   padding: const EdgeInsets.all(8),
                                                   width: double.infinity,
                                                   child: Text(
-                                                    randomWord[index],
+                                                    randomWord[index].toString(),
                                                     textAlign: TextAlign.center,
                                                     style: Theme.of(context).textTheme.titleLarge,
                                                   ),

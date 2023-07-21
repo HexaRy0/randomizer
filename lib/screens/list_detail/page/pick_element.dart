@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:randomizer/model/group_list.dart';
@@ -97,10 +98,55 @@ class _PickElementState extends ConsumerState<PickElement> {
                                       color: Theme.of(context).colorScheme.secondaryContainer,
                                       child: Padding(
                                         padding: const EdgeInsets.all(12),
-                                        child: Text(
-                                          listDetail[index],
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleLarge,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              top: 0,
+                                              left: 0,
+                                              child: Container(
+                                                padding: const EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius: BorderRadius.circular(4),
+                                                ),
+                                                child: Text("${index + 1}"),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(8),
+                                              width: double.infinity,
+                                              child: Text(
+                                                listDetail[index].toString(),
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context).textTheme.titleLarge,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: 0,
+                                              child: IconButton.filled(
+                                                style: ButtonStyle(
+                                                  backgroundColor: MaterialStateProperty.all<Color>(
+                                                    Theme.of(context).colorScheme.primaryContainer,
+                                                  ),
+                                                  foregroundColor: MaterialStateProperty.all<Color>(
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .onPrimaryContainer,
+                                                  ),
+                                                ),
+                                                icon: const Icon(Icons.copy),
+                                                onPressed: () async {
+                                                  await Clipboard.setData(
+                                                    ClipboardData(
+                                                      text: listDetail[index].toString(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),

@@ -18,9 +18,6 @@ class _RandomColorScreenState extends ConsumerState<RandomColorScreen> {
     final redHex = randomColor.red.toRadixString(16).toUpperCase();
     final greenHex = randomColor.green.toRadixString(16).toUpperCase();
     final blueHex = randomColor.blue.toRadixString(16).toUpperCase();
-    final hue = HSLColor.fromColor(randomColor).hue.round();
-    final saturation = HSLColor.fromColor(randomColor).saturation.round();
-    final lightness = HSLColor.fromColor(randomColor).lightness.round();
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: randomColor,
@@ -122,31 +119,6 @@ class _RandomColorScreenState extends ConsumerState<RandomColorScreen> {
                                         ClipboardData(
                                           text:
                                               "rgb(${randomColor.red}, ${randomColor.green}, ${randomColor.blue})",
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "hsl($hue, $saturation%, $lightness%)",
-                                    style: textColorScheme,
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.copy,
-                                      color: colorScheme.onPrimaryContainer,
-                                    ),
-                                    onPressed: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text: "hsl($hue, $saturation%, $lightness%)",
                                         ),
                                       );
                                     },

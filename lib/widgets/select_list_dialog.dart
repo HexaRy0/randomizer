@@ -45,39 +45,58 @@ class _SelectListDialogState extends ConsumerState<SelectListDialog> {
                       ref.read(selectedGroupListProvider.notifier).selectGroupList(item);
                       Navigator.pop(context);
                     },
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text('Delete Group List'),
-                                content:
-                                    const Text('Are you sure you want to delete this group list?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      ref
-                                          .read(asyncGroupListProvider.notifier)
-                                          .deleteGroupList(item);
-                                      ref
-                                          .read(selectedGroupListProvider.notifier)
-                                          .selectGroupList(null);
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Delete'),
-                                  ),
-                                ],
-                              );
-                            });
-                      },
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddGroupListScreen(
+                                  groupList: item,
+                                  isEdit: true,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Delete Group List'),
+                                    content: const Text(
+                                        'Are you sure you want to delete this group list?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(asyncGroupListProvider.notifier)
+                                              .deleteGroupList(item);
+                                          ref
+                                              .read(selectedGroupListProvider.notifier)
+                                              .selectGroupList(null);
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Delete'),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                      ],
                     ),
                   );
                 },

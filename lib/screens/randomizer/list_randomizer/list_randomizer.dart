@@ -81,27 +81,42 @@ class _ListRandomizerScreenState extends ConsumerState<ListRandomizerScreen> {
                   height: 12,
                 ),
                 Expanded(
-                  child: Column(
-                    children: [
-                      ...groupListData.map(
-                        (group) => ListTile(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ListDetailScreen(groupList: group),
+                  child: groupListData.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.list, size: 128, color: Colors.grey),
+                              const SizedBox(height: 12),
+                              Text(
+                                "No list found",
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                            );
-                          },
-                          title: Text(group.name),
-                          subtitle: Text(
-                            group.items.join(", "),
-                            overflow: TextOverflow.ellipsis,
+                            ],
                           ),
-                          trailing: const Icon(Icons.chevron_right),
+                        )
+                      : Column(
+                          children: [
+                            ...groupListData.map(
+                              (group) => ListTile(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ListDetailScreen(groupList: group),
+                                    ),
+                                  );
+                                },
+                                title: Text(group.name),
+                                subtitle: Text(
+                                  group.items.join(", "),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                trailing: const Icon(Icons.chevron_right),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
                 ),
               ],
             ),

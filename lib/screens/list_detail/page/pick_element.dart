@@ -64,7 +64,28 @@ class _PickElementState extends ConsumerState<PickElement> {
                     child: Center(
                       child: SingleChildScrollView(
                         child: listDetail.isEmpty
-                            ? const Text("No Element Picked")
+                            ? Column(
+                                children: [
+                                  Icon(
+                                    Icons.category,
+                                    size: 128,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer
+                                        .withOpacity(0.5),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    "No Element Picked",
+                                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer
+                                              .withOpacity(0.5),
+                                        ),
+                                  ),
+                                ],
+                              )
                             : ListView.builder(
                                 shrinkWrap: true,
                                 primary: false,

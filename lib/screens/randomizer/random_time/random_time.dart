@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:randomizer/providers/random_time_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -67,6 +68,10 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                     return 'Please enter amount of time generated';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   if (int.parse(value) < 1 || int.parse(value) > 500) {
                     return 'Please enter amount of time generated between 1 and 500';
                   }
@@ -130,7 +135,7 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                 title: const Text('Unique'),
                 validator: (value) {
                   if (value == true) {
-                    if (int.parse(_formKey.currentState!.value['amount'] as String) >
+                    if ((int.tryParse(_formKey.currentState!.value['amount'] as String) ?? 0) >
                         (_formKey.currentState!.value['endTime'] as DateTime)
                             .difference(_formKey.currentState!.value['startTime'] as DateTime)
                             .inMinutes) {
@@ -150,7 +155,14 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomTime.isEmpty
-                                ? const Text("Press the button to generate time")
+                                ? FaIcon(
+                                    FontAwesomeIcons.clock,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer
+                                        .withOpacity(0.5),
+                                    size: 128,
+                                  )
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     primary: false,

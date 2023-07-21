@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:randomizer/model/group_list.dart';
 import 'package:randomizer/providers/group_builder_provider.dart';
 
@@ -67,34 +68,43 @@ class _GroupElementState extends ConsumerState<GroupElement> {
                     padding: const EdgeInsets.all(8),
                     child: Center(
                       child: SingleChildScrollView(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: groupBuilder.length,
-                          itemBuilder: (context, index) {
-                            final group = groupBuilder[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Card(
-                                color: Theme.of(context).colorScheme.secondaryContainer,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Group ${groupBuilder.indexOf(group) + 1}",
-                                        style: Theme.of(context).textTheme.bodyLarge,
+                        child: groupBuilder.isEmpty
+                            ? FaIcon(
+                                FontAwesomeIcons.userGroup,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer
+                                    .withOpacity(0.5),
+                                size: 128,
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                primary: false,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: groupBuilder.length,
+                                itemBuilder: (context, index) {
+                                  final group = groupBuilder[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Card(
+                                      color: Theme.of(context).colorScheme.secondaryContainer,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              "Group ${groupBuilder.indexOf(group) + 1}",
+                                              style: Theme.of(context).textTheme.bodyLarge,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(group.items.join(', ')),
+                                          ],
+                                        ),
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(group.items.join(', ')),
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ),
                   ),

@@ -66,6 +66,10 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
                     return 'Please enter password length';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   if (int.parse(value) < 8 || int.parse(value) > 1024) {
                     return 'Please enter password length between 8 and 1024';
                   }

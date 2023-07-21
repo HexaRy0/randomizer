@@ -29,7 +29,28 @@ class _ShuffleElementState extends ConsumerState<ShuffleElement> {
                   child: Center(
                     child: SingleChildScrollView(
                       child: listDetail.isEmpty
-                          ? const Text("Press button below to start shuffle list")
+                          ? Column(
+                              children: [
+                                Icon(
+                                  Icons.shuffle,
+                                  size: 128,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer
+                                      .withOpacity(0.5),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  "Shuffle List",
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer
+                                            .withOpacity(0.5),
+                                      ),
+                                ),
+                              ],
+                            )
                           : ListView.builder(
                               shrinkWrap: true,
                               primary: false,

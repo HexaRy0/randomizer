@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:randomizer/providers/random_letter_provider.dart';
 import 'package:randomizer/static/strings.dart';
 
@@ -65,6 +66,10 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
                     return 'Please enter amount of letter generated';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   if (int.parse(value) < 1 || int.parse(value) > 500) {
                     return 'Please enter amount of letter generated between 1 and 500';
                   }
@@ -105,14 +110,13 @@ class _RandomLetterScreenState extends ConsumerState<RandomLetterScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomLetter.isEmpty
-                                ? Text(
-                                    "A~Z",
-                                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer
-                                              .withOpacity(0.5),
-                                        ),
+                                ? FaIcon(
+                                    FontAwesomeIcons.font,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer
+                                        .withOpacity(0.5),
+                                    size: 128,
                                   )
                                 : ListView.builder(
                                     shrinkWrap: true,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:randomizer/providers/random_date_provider.dart';
 import 'package:randomizer/static/strings.dart';
@@ -68,6 +69,10 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                     return "Please enter amount date generated";
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   return null;
                 },
               ),
@@ -107,7 +112,7 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                 title: const Text("Unique"),
                 validator: (value) {
                   if (value == true) {
-                    if (int.parse(_formKey.currentState!.value['amount'] as String) >
+                    if ((int.tryParse(_formKey.currentState!.value['amount'] as String) ?? 0) >
                         _formKey.currentState!.value['endDate']!
                                 .difference(_formKey.currentState!.value['startDate'] as DateTime)
                                 .inDays +
@@ -128,7 +133,14 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
                         Center(
                           child: SingleChildScrollView(
                             child: randomDate.isEmpty
-                                ? const Text("Press the button to generate date")
+                                ? FaIcon(
+                                    FontAwesomeIcons.calendarDay,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer
+                                        .withOpacity(0.5),
+                                    size: 128,
+                                  )
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     primary: false,

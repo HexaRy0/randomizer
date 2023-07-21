@@ -6,7 +6,7 @@ part of 'coin_flip_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinFlipHash() => r'75061aeb807940faa6d7854bb302c1f6df7eba8e';
+String _$coinFlipHash() => r'ea1ee8d09bab88bd892025567112862f7341cf6e';
 
 /// See also [CoinFlip].
 @ProviderFor(CoinFlip)

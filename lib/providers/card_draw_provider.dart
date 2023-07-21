@@ -36,7 +36,7 @@ class CardDraw extends _$CardDraw {
       }
     } else {
       for (int i = 0; i < amount; i++) {
-        output.add(cards[Random().nextInt(52)]);
+        output.add(cards[Random().nextInt(cards.length)]);
       }
     }
 

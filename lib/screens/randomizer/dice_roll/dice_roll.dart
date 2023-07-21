@@ -114,6 +114,10 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
                     return 'Please enter a value';
                   }
 
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number (integer)';
+                  }
+
                   if (int.parse(value) < 1 || int.parse(value) > 500) {
                     return 'Please enter a value between 1 and 500';
                   }

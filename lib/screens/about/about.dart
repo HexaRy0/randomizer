@@ -138,7 +138,10 @@ class _AboutScreenState extends State<AboutScreen> {
                               child: const Text("Close"),
                             ),
                             TextButton(
-                              onPressed: () => _launchUrl("https://discordapp.com/"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _launchUrl("https://discordapp.com/users/renzyo");
+                              },
                               child: const Text("Open Discord"),
                             ),
                           ],

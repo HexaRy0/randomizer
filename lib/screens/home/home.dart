@@ -143,11 +143,25 @@ class _HomeScreenState extends State<HomeScreen> {
               return const [
                 PopupMenuItem(
                   value: "settings",
-                  child: Text("Settings"),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.settings),
+                      SizedBox(width: 8),
+                      Text("Settings"),
+                    ],
+                  ),
                 ),
                 PopupMenuItem(
                   value: "about",
-                  child: Text("About"),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.info),
+                      SizedBox(width: 8),
+                      Text("About"),
+                    ],
+                  ),
                 ),
               ];
             },

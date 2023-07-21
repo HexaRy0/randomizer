@@ -142,6 +142,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                       .setAccentColor(color.value);
                                 }
 
+                                // ignore: use_build_context_synchronously
                                 Navigator.pop(context);
                               },
                             ),

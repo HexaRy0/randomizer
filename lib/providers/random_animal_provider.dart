@@ -12,6 +12,10 @@ class RandomAnimal extends _$RandomAnimal {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomAnimal(int amount) {
     final random = Random();
     const animalLists = AnimalList.animalLists;

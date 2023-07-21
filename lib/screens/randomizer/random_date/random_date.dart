@@ -23,6 +23,16 @@ class _RandomDateScreenState extends ConsumerState<RandomDateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.randomDate),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(randomDateProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Date"),

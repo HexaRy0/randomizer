@@ -22,6 +22,16 @@ class _RandomWordScreenState extends ConsumerState<RandomWordScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.randomWord),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(randomWordProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Letter"),

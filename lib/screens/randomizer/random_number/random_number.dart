@@ -21,6 +21,16 @@ class _RandomNumberState extends ConsumerState<RandomNumberScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Random Number'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(randomNumberProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Generate Number'),

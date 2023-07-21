@@ -11,6 +11,10 @@ class RandomLetter extends _$RandomLetter {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomLetter(int amount, String type) {
     const letters = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

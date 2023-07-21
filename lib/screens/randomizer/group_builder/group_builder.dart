@@ -21,6 +21,7 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
   String errorText = "";
 
   void _handleResetButton() {
+    FocusScope.of(context).unfocus();
     _formKey.currentState!.reset();
     ref.read(groupBuilderProvider.notifier).reset();
     ref.read(selectedGroupListProvider.notifier).unselectGroupList();
@@ -53,9 +54,9 @@ class _GroupBuilderScreenState extends ConsumerState<GroupBuilderScreen> {
       appBar: AppBar(
         title: const Text('Group Builder'),
         actions: [
-          TextButton(
+          IconButton(
             onPressed: _handleResetButton,
-            child: const Text('RESET'),
+            icon: const Icon(Icons.restore_rounded),
           ),
         ],
       ),

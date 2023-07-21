@@ -12,6 +12,10 @@ class RandomDate extends _$RandomDate {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomDate(int amount, DateTime startDate, DateTime endDate, bool unique) {
     final random = Random();
 

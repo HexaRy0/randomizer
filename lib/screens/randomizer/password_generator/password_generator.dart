@@ -23,6 +23,16 @@ class _PasswordGeneratorScreenState extends ConsumerState<PasswordGeneratorScree
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.passwordGenerator),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(passwordGeneratorProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Password"),

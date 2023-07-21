@@ -11,6 +11,10 @@ class RandomNumber extends _$RandomNumber {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomNumber(int amount, int min, int max, bool unique) {
     List<int> output = [];
 

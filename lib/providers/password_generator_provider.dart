@@ -11,6 +11,10 @@ class PasswordGenerator extends _$PasswordGenerator {
     return '';
   }
 
+  void reset() {
+    state = '';
+  }
+
   void generatePassword(int length, List<String> includes) {
     const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';

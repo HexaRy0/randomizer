@@ -11,6 +11,10 @@ class CoinFlip extends _$CoinFlip {
     return "";
   }
 
+  void reset() {
+    state = "";
+  }
+
   void flipCoin() {
     String output = "";
 

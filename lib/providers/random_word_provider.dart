@@ -13,6 +13,10 @@ class RandomWord extends _$RandomWord {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomWord(int amount) {
     final random = Random();
     const wordList = WordList.wordLists;

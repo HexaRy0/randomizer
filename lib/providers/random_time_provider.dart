@@ -12,6 +12,10 @@ class RandomTime extends _$RandomTime {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void generateRandomTime(int amount, DateTime startTime, DateTime endTime, bool unique) {
     final random = Random();
 

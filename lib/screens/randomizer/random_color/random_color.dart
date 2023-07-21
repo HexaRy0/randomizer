@@ -31,6 +31,15 @@ class _RandomColorScreenState extends ConsumerState<RandomColorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.randomColor),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              ref.read(randomColorProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.shuffle),

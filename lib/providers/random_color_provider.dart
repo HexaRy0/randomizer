@@ -12,6 +12,10 @@ class RandomColor extends _$RandomColor {
     return Colors.white;
   }
 
+  void reset() {
+    state = Colors.white;
+  }
+
   void generateRandomColor() {
     final random = Random();
 

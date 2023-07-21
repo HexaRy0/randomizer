@@ -11,6 +11,10 @@ class DiceRoll extends _$DiceRoll {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void rollDice(int sides, int amount) {
     List<int> output = [];
     List<int> numbers = [];

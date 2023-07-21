@@ -35,6 +35,15 @@ class _CoinFlipScreenState extends ConsumerState<CoinFlipScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.coinFlip),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              ref.read(coinFlipProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Flip Coin"),

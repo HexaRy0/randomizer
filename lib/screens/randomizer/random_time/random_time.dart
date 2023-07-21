@@ -22,6 +22,16 @@ class _RandomTimeScreenState extends ConsumerState<RandomTimeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.randomTime),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(randomTimeProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Time"),

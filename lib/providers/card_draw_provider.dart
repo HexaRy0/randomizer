@@ -11,6 +11,10 @@ class CardDraw extends _$CardDraw {
     return [];
   }
 
+  void reset() {
+    state = [];
+  }
+
   void drawCard(String deckType, int amount, bool unique) {
     List<String> output = [];
 

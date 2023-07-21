@@ -22,6 +22,16 @@ class _RandomAnimalScreenState extends ConsumerState<RandomAnimalScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.randomAnimal),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(randomAnimalProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Generate Animal"),

@@ -55,6 +55,16 @@ class _DiceRollScreenState extends ConsumerState<DiceRollScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(StaticStrings.diceRoll),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore_rounded),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              ref.read(diceRollProvider.notifier).reset();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Dice Roll"),

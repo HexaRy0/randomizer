@@ -93,6 +93,10 @@ class _AboutScreenState extends State<AboutScreen> {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 12),
+                        TextButton(
+                          child: const Text("Privacy Policy"),
+                          onPressed: () => _launchUrl("https://randomizer.merza.dev/"),
+                        ),
                       ],
                     ),
                   ),
